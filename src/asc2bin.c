@@ -1,7 +1,12 @@
 #include <stdio.h>
 #include <unistd.h>
+#include <io.h>
+#include <fcntl.h>
 
 int main (void) {
+    _setmode(_fileno(stdin), _O_BINARY);
+    _setmode(_fileno(stdout), _O_BINARY);
+    
     char c;
     char buf = 0;
     int mask = 1 << 7;
