@@ -82,7 +82,7 @@ out/%.lazyk-out: examples/% $(target_lazyk) $(LAZYK)
 uni++: $(UNIPP)
 ./build/binary-lambda-calculus/uni.cpp:
 	mkdir -p ./build
-	cd build; git clone https://github.com/melvinzhang/binary-lambda-calculus
+	cd build; git clone https://github.com/legendaryzyper/binary-lambda-calculus
 
 $(UNIPP): ./build/binary-lambda-calculus/uni.cpp
 	cd build/binary-lambda-calculus && make uni
