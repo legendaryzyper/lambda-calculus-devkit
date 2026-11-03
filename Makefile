@@ -122,12 +122,12 @@ $(LAZYK): ./build/lazyk/lazyk.c
 blc: $(BLC)
 build/Blc.S:
 	mkdir -p ./build
-	wget https://justine.lol/lambda/Blc.S?v=2
+	wget https://web.archive.org/web/20240101id_/https://justine.lol/lambda/Blc.S?v=2
 	mv Blc.S?v=2 ./build/Blc.S
 
 build/flat.lds:
 	mkdir -p ./build
-	wget https://justine.lol/lambda/flat.lds
+	wget https://web.archive.org/web/20240101id_/https://justine.lol/lambda/flat.lds
 	mv flat.lds ./build
 
 $(BLC): build/Blc.S build/flat.lds
@@ -221,15 +221,15 @@ lam2bin: $(LAM2BIN)
 
 build/lam2bin.c:
 	mkdir -p ./build
-	wget https://justine.lol/lambda/lam2bin.c
+	wget https://web.archive.org/web/20240101id_/https://justine.lol/lambda/lam2bin.c
 	mv lam2bin.c ./build
 
 build/lam2bin_ext.c: build/lam2bin.c
 	# Extend the maximum term limit to execute large programs
-	cd build; cat lam2bin.c | sed 's/int args\[1024\];/int args\[16777216\];/' > lam2bin_ext.c
+	cd build; cat lam2bin.c | sed 's/fgetwc/fgetc/g; s/ungetwc/ungetc/g; s/getwc(/getc(/g; s/getwchar/getchar/g; s/wchar_t/int/g; s/wint_t/int/g; s/int args\[1024\];/int args\[16777216\];/' > lam2bin_ext.c
 
 $(LAM2BIN): build/lam2bin_ext.c
-	cd build; $(CC) -O2 -o lam2bin lam2bin_ext.c
+	cd build; $(CC) -O2 -Wl,--stack,268435456 -o lam2bin lam2bin_ext.c
 	mv build/lam2bin ./bin
 	chmod 755 $(LAM2BIN)
 
